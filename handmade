@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>婚禮賓果卡 · Wedding Bingo Cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@400;500;700&family=Fraunces:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FBF6EC;
+    --paper: #FFFFFF;
+    --ink: #2A2A2A;
+    --primary: #3D5240;
+    --primary-light: #6B7F6A;
+    --accent: #B8915A;
+    --accent-soft: #E6D9BE;
+    --muted: #8C8579;
+    --border: #DDD5C5;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', 'Noto Sans TC', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === Control Bar === */
+  .controls {
+    position: sticky;
+    top: 0;
+    background: var(--paper);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 28px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(60, 50, 30, 0.06);
+  }
+
+  .controls .brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--primary);
+    letter-spacing: 0.05em;
+    margin-right: 24px;
+  }
+
+  .controls label {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .controls input {
+    font-family: inherit;
+    font-size: 15px;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    width: 70px;
+    margin-left: 8px;
+    color: var(--ink);
+  }
+
+  .controls button {
+    font-family: inherit;
+    font-size: 13px;
+    padding: 10px 20px;
+    background: var(--primary);
+    color: var(--paper);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: opacity 0.2s;
+  }
+
+  .controls button:hover { opacity: 0.85; }
+
+  .controls button.secondary {
+    background: var(--paper);
+    color: var(--primary);
+    border: 1px solid var(--primary);
+  }
+
+  .controls .hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: auto;
+    font-style: italic;
+  }
+
+  /* === Bingo Card Page (10cm x 15cm) === */
+  .bingo-page {
+    width: 100mm;
+    height: 150mm;
+    margin: 16px auto;
+    background: var(--paper);
+    box-shadow: 0 4px 30px rgba(60, 50, 30, 0.08);
+    page-break-after: always;
+  }
+
+  .bingo-card {
+    width: 100%;
+    height: 100%;
+    border: 1.5px solid var(--primary);
+    padding: 5mm 6mm;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    overflow: hidden;
+  }
+
+  /* Corner ornaments */
+  .bingo-card::before,
+  .bingo-card::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid var(--accent);
+  }
+
+  .bingo-card::before {
+    top: -1.5px;
+    left: -1.5px;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .bingo-card::after {
+    bottom: -1.5px;
+    right: -1.5px;
+    border-left: none;
+    border-top: none;
+  }
+
+  .card-corner-tr,
+  .card-corner-bl {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid var(--accent);
+  }
+
+  .card-corner-tr {
+    top: -1.5px;
+    right: -1.5px;
+    border-left: none;
+    border-bottom: none;
+  }
+
+  .card-corner-bl {
+    bottom: -1.5px;
+    left: -1.5px;
+    border-right: none;
+    border-top: none;
+  }
+
+  .bingo-header {
+    text-align: center;
+    margin-bottom: 2mm;
+  }
+
+  .bingo-header .small-mark {
+    color: var(--accent);
+    font-size: 9px;
+    letter-spacing: 0.8em;
+    margin-bottom: 1px;
+  }
+
+  .bingo-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--primary);
+    margin: 0;
+    letter-spacing: 0.4em;
+  }
+
+  .bingo-header .tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    margin-top: 1px;
+  }
+
+  .name-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+    font-size: 9px;
+    color: var(--muted);
+    margin-bottom: 2mm;
+    letter-spacing: 0.1em;
+  }
+
+  .name-row .field {
+    flex: 0 0 34%;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+  }
+
+  .name-row .field.rule {
+    flex: 1;
+    border-bottom: none;
+    justify-content: flex-end;
+    align-items: flex-end;
+    color: var(--accent);
+    font-size: 8px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    padding-bottom: 2px;
+  }
+
+  .bingo-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 1mm;
+    flex: 1;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .bingo-cell {
+    background: linear-gradient(135deg, #FCFAF4 0%, #F7F2E5 100%);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 18px;
+    position: relative;
+  }
+
+  .bingo-cell::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border: 1px solid rgba(184, 145, 90, 0.15);
+  }
+
+  /* === Print === */
+  @media print {
+    body { background: var(--paper); }
+    .controls { display: none; }
+    .bingo-page {
+      margin: 0;
+      box-shadow: none;
+      page-break-after: always;
+    }
+  }
+
+  @page {
+    size: 100mm 150mm;
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <div class="brand">Wedding Bingo Cards</div>
+  <div>
+    <label>賓果卡張數</label>
+    <input type="number" id="cardCount" value="20" min="1" max="300" step="1">
+  </div>
+  <button onclick="generateCards()">重新生成</button>
+  <button class="secondary" onclick="window.print()">列印</button>
+  <span class="hint">每張 10cm × 15cm，一頁一張</span>
+</div>
+
+<div id="cards-container"></div>
+
+<script>
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+ function createCard() {
+  // 建立 1~50
+  const allNumbers = Array.from({ length: 50 }, (_, i) => i + 1);
+
+  // 隨機取出 25 個不重複數字
+  const numbers = shuffle(allNumbers).slice(0, 25);
+
+  // 將中央格（第 13 格）改成 ?
+  numbers[12] = '?';
+
+  const cells = numbers
+    .map(n => `<div class="bingo-cell">${n}</div>`)
+    .join('');
+
+  return `
+    <div class="bingo-card">
+      <div class="card-corner-tr"></div>
+      <div class="card-corner-bl"></div>
+
+      <div class="bingo-header">
+        <div class="small-mark">❦ ❦ ❦</div>
+        <h2>B I N G O</h2>
+        <div class="tagline">— 婚禮賓果 · Wedding Bingo —</div>
+      </div>
+
+      <div class="name-row">
+        <div class="field">姓名：</div>
+        <div class="field rule">先連成三條線的人，舉手大喊「賓果！」</div>
+      </div>
+
+      <div class="bingo-grid">${cells}</div>
+    </div>
+  `;
+}
+
+  function generateCards() {
+    let count = parseInt(document.getElementById('cardCount').value);
+    if (isNaN(count) || count < 1) count = 1;
+
+    const container = document.getElementById('cards-container');
+    let html = '';
+    for (let i = 0; i < count; i++) {
+      html += `<div class="bingo-page">${createCard()}</div>`;
+    }
+    container.innerHTML = html;
+  }
+
+  generateCards();
+</script>
+
+</body>
+</html>
