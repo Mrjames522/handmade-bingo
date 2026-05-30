@@ -302,13 +302,8 @@
   }
 
  function createCard() {
-  // 建立 1~50
   const allNumbers = Array.from({ length: 50 }, (_, i) => i + 1);
-
-  // 隨機取出 25 個不重複數字
   const numbers = shuffle(allNumbers).slice(0, 25);
-
-  // 將中央格（第 13 格）改成 ?
   numbers[12] = '?';
 
   const cells = numbers
